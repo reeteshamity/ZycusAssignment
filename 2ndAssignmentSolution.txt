@@ -1,0 +1,14 @@
+#!/bin/bash
+###### We are assumeing password-less connectivity ######
+
+echo "Enter the hostname:"
+read host
+
+echo "Enter the command you want to run on these hosts:"
+read comd
+
+echo $host|sed 's/,/\n/g' > hostfile.txt                ###Replace comma(,) with new-line
+
+pssh -h hostfile.txt -l root -i "$comd"              ###Execute command on given hosts
+
+Note: We need to install pssh package for this script. 
