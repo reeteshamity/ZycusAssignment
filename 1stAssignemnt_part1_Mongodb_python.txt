@@ -1,0 +1,20 @@
+FROM centos:centos7
+MAINTAINER ritesh@gmail.com
+##INSTALL PYTHON
+RUN yum -y update; yum clean all
+RUN yum -y install epel-release; yum clean all
+RUN yum -y install python-pip; yum clean all
+
+ADD . /src
+
+RUN cd /src; pip install -r requirements.txt
+###INSTALL MONGODB
+RUN yum -y update; yum clean all
+RUN yum -y install epel-release; yum clean all
+RUN yum -y install mongodb-server; yum clean all
+RUN mkdir -p /data/db
+
+EXPOSE 8080 27017
+
+CMD ["python", "/src/index.py"]
+ENTRYPOINT ["/usr/bin/mongod"]
